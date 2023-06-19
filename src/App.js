@@ -1,12 +1,11 @@
 import React, { Fragment } from "react";
 import "./App.scss";
 import { Notification, Section } from "rbx";
+import Header from "../src/components/header/index";
 
 const App = () => (
   <Fragment>
-    <Section>
-      <Notification color="success">JavaScrpit Notes! </Notification>
-    </Section>
+    <Header />
   </Fragment>
 );
 
