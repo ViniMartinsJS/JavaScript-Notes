@@ -10,10 +10,10 @@ const RoutesApp = () => (
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<HomeScreen />} />
-      <Route exact path="/register" component={<RegisterScreen />} />
-      <Route exact path="/login" component={<LoginScreen />} />
-      <Route exact path="/notes" component={<NotesIndexScreen />} />
-      <Route exact path="/users/edit" component={<UserEditScreen />} />
+      <Route path="/register" element={<RegisterScreen />} />
+      <Route path="/login" element={<LoginScreen />} />
+      <Route path="/notes" element={<NotesIndexScreen />} />
+      <Route path="/users/edit" element={<UserEditScreen />} />
     </Routes>
   </BrowserRouter>
 );
