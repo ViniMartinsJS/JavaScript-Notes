@@ -1,12 +1,9 @@
-import React, { Fragment } from "react";
+import React from "react";
 import "./App.scss";
-import { Notification, Section } from "rbx";
-import Header from "../src/components/header/index";
+import RoutesApp from "./routes";
 
-const App = () => (
-  <Fragment>
-    <Header />
-  </Fragment>
-);
+const App = () => {
+  return <RoutesApp />;
+};
 
 export default App;
