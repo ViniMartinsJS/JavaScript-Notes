@@ -10,31 +10,30 @@ import {
   Label,
 } from "rbx";
 import { Navigate } from "react-router-dom";
-import UsersService from "../../../services/users";
-import "../../../styles/auth.scss";
+import UserService from "../../../services/users";
 
-function RegisterForm() {
-  const [name, setName] = useState("");
+function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [redirectToLogin, setRedirectToLogin] = useState(false);
-  const [error, setError] = useState(false);
+  const [RedirectToRegister, setRedirectToRegister] = useState(false);
+  const [RedirectToNotes, setRedirectToNotes] = useState(false);
+  const [Error, setError] = useState(false);
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
+
     try {
-      const user = await UsersService.register({
-        name: name,
-        email: email,
-        password: password,
-      });
-      setRedirectToLogin(true);
+      await UserService.login({ email: email, password: password });
+      setRedirectToNotes(true);
     } catch (error) {
       setError(true);
     }
   };
 
-  if (redirectToLogin) return <Navigate to={{ pathname: "/login" }} />;
+  if (RedirectToRegister == true)
+    return <Navigate to={{ pathname: "/register" }} />;
+  else if (RedirectToNotes == true)
+    return <Navigate to={{ pathname: "/notes" }} />;
 
   return (
     <Fragment>
@@ -42,26 +41,14 @@ function RegisterForm() {
         <form onSubmit={handleSubmit}>
           <Column size={12}>
             <Field>
-              <Label size="small">Name:</Label>
-              <Control>
-                <Input
-                  type="name"
-                  required
-                  name="name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </Control>
-            </Field>
-            <Field>
               <Label size="small">Email:</Label>
               <Control>
                 <Input
                   type="email"
-                  required
-                  name="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  required
+                  name="email"
                 />
               </Control>
             </Field>
@@ -70,37 +57,33 @@ function RegisterForm() {
               <Control>
                 <Input
                   type="password"
-                  required
-                  name="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  required
+                  name="password"
                 />
               </Control>
             </Field>
             <Field>
               <Control>
-                <Column.Group breakpoint="mobile">
+                <Column.Group>
                   <Column>
                     <a
+                      onClick={(e) => setRedirectToRegister(true)}
                       className="button is-white has-text-custom-purple"
-                      onClick={(e) => setRedirectToLogin(true)}
                     >
-                      Login or
+                      Register or
                     </a>
                   </Column>
                   <Column>
-                    <Button
-                      color="custom-purple"
-                      outlined
-                      className="has-text-custom-purple"
-                    >
-                      Register
+                    <Button color="custom-purple" outlined>
+                      Login
                     </Button>
                   </Column>
                 </Column.Group>
               </Control>
             </Field>
-            {error && <Help color="danger">Email or Password invalid</Help>}
+            {Error && <Help color="danger">Email or Password invalid</Help>}
           </Column>
         </form>
       </Column.Group>
@@ -108,4 +91,4 @@ function RegisterForm() {
   );
 }
 
-export default RegisterForm;
+export default LoginForm;
