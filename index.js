@@ -1,12 +1,11 @@
-import React, { useState } from "react";
-import { Navbar, Column, Button, Dropdown } from "rbx";
+import React, { Fragment, useState } from "react";
+import { Navbar, Container, Column, Button, Dropdown } from "rbx";
+import LogoImage from "../../assets/images/logo-white.png";
+import "../../styles/header.scss";
+import UserService from "../../services/users";
 import { Navigate, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faList } from "@fortawesome/free-solid-svg-icons";
-
-import LogoImage from "../../assets/images/logo.png";
-import UserService from "../../services/users";
-import "../../styles/header.scss";
 
 function HeaderLogged(props) {
   const [redirectToHome, setRedirectToHome] = useState(false);
@@ -16,7 +15,7 @@ function HeaderLogged(props) {
     setRedirectToHome(true);
   };
 
-  if (redirectToHome === true) return <Navigate to={{ pathname: "/" }} />;
+  if (redirectToHome == true) return <Navigate to={{ pathname: "/" }} />;
 
   return (
     <Navbar color="custom-purple" className="navbar-logged">
@@ -24,24 +23,10 @@ function HeaderLogged(props) {
         <Column.Group>
           <Column size="11" offset="1">
             <Link to="/notes">
-              <img
-                src={LogoImage}
-                style={{ backgroundColor: "transparent" }}
-                alt="Logo"
-              />
+              <img src={LogoImage} />
             </Link>
           </Column>
         </Column.Group>
-        <Navbar.Burger
-          className="navbar-burger burger"
-          aria-label="menu"
-          aria-expanded="false"
-          data-target="navbar-menu"
-        >
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </Navbar.Burger>
       </Navbar.Brand>
 
       <Navbar.Menu>
@@ -57,11 +42,10 @@ function HeaderLogged(props) {
                   <span>Leonardo ▼</span>
                 </Button>
               </Dropdown.Trigger>
-
               <Dropdown.Menu>
                 <Dropdown.Content>
-                  <Dropdown.Item as={Link} to="/users/edit">
-                    User Edit
+                  <Dropdown.Item as="div">
+                    <Link to="/users/edit">User Edit</Link>
                   </Dropdown.Item>
                   <Dropdown.Divider />
                   <Dropdown.Item as="div">
