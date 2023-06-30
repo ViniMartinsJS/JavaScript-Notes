@@ -10,45 +10,45 @@ import {
   Label,
 } from "rbx";
 import { Navigate } from "react-router-dom";
-import UserService from "../../../services/users";
+import UsersService from "../../../services/users";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [RedirectToRegister, setRedirectToRegister] = useState(false);
-  const [RedirectToNotes, setRedirectToNotes] = useState(false);
-  const [Error, setError] = useState(false);
+  const [redirectToRegister, setRedirectToRegister] = useState(false);
+  const [redirectToNotes, setRedirectToNotes] = useState(false);
+  const [error, setError] = useState(false);
 
-  const handleSubmit = async (evt) => {
+  const HandleSubmit = async (evt) => {
     evt.preventDefault();
-
     try {
-      await UserService.login({ email: email, password: password });
+      const user = await UsersService.login({
+        email: email,
+        password: password,
+      });
       setRedirectToNotes(true);
     } catch (error) {
       setError(true);
     }
   };
 
-  if (RedirectToRegister == true)
-    return <Navigate to={{ pathname: "/register" }} />;
-  else if (RedirectToNotes == true)
-    return <Navigate to={{ pathname: "/notes" }} />;
+  if (redirectToRegister) return <Navigate to={{ pathname: "/register" }} />;
+  else if (redirectToNotes) return <Navigate to={{ pathname: "/notes" }} />;
 
   return (
     <Fragment>
       <Column.Group centered>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={HandleSubmit}>
           <Column size={12}>
             <Field>
               <Label size="small">Email:</Label>
               <Control>
                 <Input
                   type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
                   required
                   name="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </Control>
             </Field>
@@ -57,20 +57,20 @@ function LoginForm() {
               <Control>
                 <Input
                   type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
                   required
                   name="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </Control>
             </Field>
             <Field>
               <Control>
-                <Column.Group>
+                <Column.Group breakpoint="mobile">
                   <Column>
                     <a
-                      onClick={(e) => setRedirectToRegister(true)}
                       className="button is-white has-text-custom-purple"
+                      onClick={(e) => setRedirectToRegister(true)}
                     >
                       Register or
                     </a>
@@ -83,7 +83,7 @@ function LoginForm() {
                 </Column.Group>
               </Control>
             </Field>
-            {Error && <Help color="danger">Email or Password invalid</Help>}
+            {error && <Help color="danger">Email or Password invalid</Help>}
           </Column>
         </form>
       </Column.Group>

@@ -1,34 +1,30 @@
 import React, { useState } from "react";
-import { Navbar, Column, Button, Dropdown } from "rbx";
-import { Navigate, Link } from "react-router-dom";
+import { Navbar, Container, Column, Button, Dropdown } from "rbx";
+import logoImage from "../../assets/images/logo.png";
+import "../../styles/header.scss";
+import UsersService from "../../services/users";
+import { Redirect, Link, Navigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faList } from "@fortawesome/free-solid-svg-icons";
 
-import LogoImage from "../../assets/images/logo.png";
-import UserService from "../../services/users";
-import "../../styles/header.scss";
-
 function HeaderLogged(props) {
   const [redirectToHome, setRedirectToHome] = useState(false);
+  const [user, setUser] = useState(localStorage.getItem("user"));
 
   const logOut = async () => {
-    await UserService.logout();
+    await UsersService.logout();
     setRedirectToHome(true);
   };
 
-  if (redirectToHome === true) return <Navigate to={{ pathname: "/" }} />;
+  if (redirectToHome == true) return <Navigate to={{ pathname: "/" }} />;
 
   return (
     <Navbar color="custom-purple" className="navbar-logged">
       <Navbar.Brand>
         <Column.Group>
           <Column size="11" offset="1">
-            <Link to="/notes">
-              <img
-                src={LogoImage}
-                style={{ backgroundColor: "transparent" }}
-                alt="Logo"
-              />
+            <Link to="/">
+              <img src={logoImage} />
             </Link>
           </Column>
         </Column.Group>
@@ -47,6 +43,22 @@ function HeaderLogged(props) {
       <Navbar.Menu>
         <Navbar.Segment
           as="div"
+          className="navbar-item navbar-start"
+          align="start"
+        >
+          <Navbar.Item as="div">
+            <Button
+              className="open-button"
+              color="white"
+              outlined
+              onClick={() => props.setIsOpen(true)}
+            >
+              <FontAwesomeIcon icon={faList} />
+            </Button>
+          </Navbar.Item>
+        </Navbar.Segment>
+        <Navbar.Segment
+          as="div"
           className="navbar-item navbar-end"
           align="right"
         >
@@ -54,14 +66,13 @@ function HeaderLogged(props) {
             <Dropdown>
               <Dropdown.Trigger>
                 <Button className="button" color="white" outlined>
-                  <span>Leonardo ▼</span>
+                  <span>{JSON.parse(user)["name"]} ▼</span>
                 </Button>
               </Dropdown.Trigger>
-
               <Dropdown.Menu>
                 <Dropdown.Content>
-                  <Dropdown.Item as={Link} to="/users/edit">
-                    User Edit
+                  <Dropdown.Item as="div">
+                    <Link to="/users/edit">User Edit</Link>
                   </Dropdown.Item>
                   <Dropdown.Divider />
                   <Dropdown.Item as="div">

@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import Header from "../../../components/header";
 import { Column, Section, Title, Container, Card } from "rbx";
-import LogoImage from "../../../assets/images/logo.png";
+import logoImage from "../../../assets/images/logo.png";
 import "../../../styles/auth.scss";
 import LoginForm from "../../../components/auth/login_form";
 
@@ -17,11 +17,10 @@ const LoginScreen = () => (
                 <Section>
                   <Column.Group centered>
                     <Column size={12}>
-                      <img src={LogoImage} alt="Logo" />
+                      <img src={logoImage} />
                     </Column>
                   </Column.Group>
-                </Section>
-                <Section>
+
                   <Column.Group>
                     <Column size={12}>
                       <Title
@@ -32,8 +31,8 @@ const LoginScreen = () => (
                       </Title>
                     </Column>
                   </Column.Group>
+                  <LoginForm />
                 </Section>
-                <LoginForm />
               </Card.Content>
             </Card>
           </Column>

@@ -11,7 +11,6 @@ import {
 } from "rbx";
 import { Navigate } from "react-router-dom";
 import UsersService from "../../../services/users";
-import "../../../styles/auth.scss";
 
 function RegisterForm() {
   const [name, setName] = useState("");
@@ -20,7 +19,7 @@ function RegisterForm() {
   const [redirectToLogin, setRedirectToLogin] = useState(false);
   const [error, setError] = useState(false);
 
-  const handleSubmit = async (evt) => {
+  const HandleSubmit = async (evt) => {
     evt.preventDefault();
     try {
       const user = await UsersService.register({
@@ -39,7 +38,7 @@ function RegisterForm() {
   return (
     <Fragment>
       <Column.Group centered>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={HandleSubmit}>
           <Column size={12}>
             <Field>
               <Label size="small">Name:</Label>
@@ -89,11 +88,7 @@ function RegisterForm() {
                     </a>
                   </Column>
                   <Column>
-                    <Button
-                      color="custom-purple"
-                      outlined
-                      className="has-text-custom-purple"
-                    >
+                    <Button color="custom-purple" outlined>
                       Register
                     </Button>
                   </Column>
